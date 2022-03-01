@@ -1,0 +1,24 @@
+<div
+  class="wrapper {{ config.containerClass }}"
+  id="c_{{ componentKey }}"
+  *ngIf="otpForm?.controls"
+  [ngStyle]="config.containerStyles"
+>
+  <input
+    [pattern]="'\\d*'"
+    [type]="inputType"
+    placeholder="-"
+    onkeypress="
+        return(event.charCode >= 48 && event.charCode <= 57) ||
+          event.charCode == 0
+      "
+    [ngStyle]="config.inputStyles"
+    class="otp-input {{ config.inputClass }}"
+    autocomplete="one-time-code"
+    *ngFor="let item of otpForm?.controls | keys; let i = index"
+    [formControl]="otpForm.controls[item]"
+    id="otp_{{ i }}_{{ componentKey }}"
+    (keydown)="onKeyDown($event)"
+    (keyup)="onKeyUp($event, i)"
+  />
+</div>
